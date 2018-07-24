@@ -114,6 +114,6 @@ Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à :
 Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
 ```php
-    Form::text(name)
-    Form::submit('send!')
+    {{Form::text(name)}}
+    {{Form::submit('send!')}}
 ```
