@@ -138,3 +138,4 @@ dans le projet, on tape dans le terminal :
 php artisan make:controller Formcontroller
 ```
 
+Vous allez voir que dans votre projet, un nouveau fichier s'et c'éé dans app/Http/controller et qui s'appelle Formcontroller.php .
