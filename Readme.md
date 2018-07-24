@@ -68,6 +68,44 @@ Quand c'est fait, ouvrez votre terminal dans le dossier et exécutez la commande
 composer update
 ```
 L'installation de la dépendance va alors se lancer.
+Ensuite allez dans config/app.php et ajoutez dans "providers" :
+```
+Collective\Html\HtmlServiceProvider::class,
+```
+et dans aliases (toujours dans le fichier app.php) :
+```
+'Form' => Collective\Html\FormFacade::class,
+'Html' => Collective\Html\HtmlFacade::class,
+```
 
 ### Création de la page contenant le formulaire
+
+Il faut savoir une chose avant de commencer à faire notre page: 
+Laravel gère ses pages de manière propre en passant par son système appelé "Blade"
+![blade](blade.jpg)
+(non pas celui-là)
+
+Aussi, on ne crée pas une page n'importe où dans Laravel, il faut aller dans: 
+```
+resources/views 
+```
+Où se trouve déjà un fichier welcome.blade.php
+Vous pouvez créer un nouveau fichier dans views qu'on va appeler form.blade.php
+
+Ensuite, vous pouvez le remplir avec de l'HTML mais n'allez pas plus loin que la balise body.
+Dans celle-ci, on va créer le formulaire en ajoutant ces lignes : 
+
+```php
+{!! Form::open('route' => 'Formcontroller@post') !!}
+
+{!! Form::close() !!}
+```
+
+J'expliquerai ensuite à quoi sert la route.
+Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent à un : 
+```html
+<form action="lien-du-fichier">
+
+</form>
+```
 
