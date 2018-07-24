@@ -37,3 +37,6 @@ laravel new nom-de-projet
 
 Composer va alors initialiser un nouveau projet contenant Laravel.
 Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez le dossier contenant le projet (ou ajoutez le sur wamp si vous êtes sur windows, xamp sur mac).
+Vous arriverez sur un index ressemblant à ça : 
+
+![index](folder-content.png)
