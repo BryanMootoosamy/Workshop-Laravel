@@ -21,7 +21,7 @@ A présent que Composer est installé, passons à la suite.
 
 ### Installation de Laravel
 
-Maintenant que Composer est intallé, nous allons nous rendre dans le dossier www contenant nos projets habituels afin de créer notre projet.
+Maintenant que Composer est installé, nous allons nous rendre dans le dossier www contenant nos projets habituels afin de créer notre projet.
 
 !!Attention!! Vérifiez à posséder la version la plus récente de PHP.
 
@@ -104,10 +104,16 @@ Dans celle-ci, on va créer le formulaire en ajoutant ces lignes :
 ```
 
 J'expliquerai ensuite à quoi sert la route.
-Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent à un : 
+Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à : 
 ```html
 <form action="lien-du-fichier">
 
 </form>
 ```
 
+Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
+Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
+```php
+    Form::text(name)
+    Form::submit('send!')
+```
