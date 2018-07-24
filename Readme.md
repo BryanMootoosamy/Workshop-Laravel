@@ -98,15 +98,14 @@ Ensuite, vous pouvez le remplir avec de l'HTML mais n'allez pas plus loin que la
 Dans celle-ci, on va créer le formulaire en ajoutant ces lignes : 
 
 ```php
-{!! Form::open('route' => 'Formcontroller@post') !!}
+{!! Form::open() !!}
 
 {!! Form::close() !!}
 ```
 
-J'expliquerai ensuite à quoi sert la route.
 Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à : 
 ```html
-<form action="lien-du-fichier">
+<form>
 
 </form>
 ```
@@ -114,7 +113,7 @@ Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à :
 Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
 ```php
-    {{Form::text(name)}}
+    {{Form::text('name')}}
     {{Form::submit('send!')}}
 ```
 
@@ -130,3 +129,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 ```
+retournez dans l'index de votre navigateur puis sur le fichier public et Hop !
+Vous voilà avec un formulaire ! 
+Vous remarquerez que lorsque l'on tappe n'importe quoi, rien ne se passe ! C'est parce qu'il nous manque toujours le controller ainsi que la base de donnée qui va dialoguer avec le formulaire. Pour créer un controller, Laravel va créer les fichiers demandés en passant par le terminal !
+
+dans le projet, on tape dans le terminal :
+```
+php artisan make:controller Formcontroller
+```
+
