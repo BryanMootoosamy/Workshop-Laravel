@@ -13,7 +13,7 @@ Car avant de commencer, installons Composer.
 
 ![Logo Composer](Logo-composer-transparent.png)
 
-En effet, pour Installer et utiliser Laravel et ses différentes fonctionnalités, il faut tout d'abord utiliser Composer. Et ce dernier est à PHP ce que NPM est à Node.JS. C'est un gestionnaire de dépendances qui permet d'installer, comme sa fonction l'indique, des dépendaces et donc des packages de fonctionnalités que l'on peut comparer aux modules Node.JS.
+En effet, pour Installer et utiliser Laravel et ses différentes fonctionnalités, il faut tout d'abord utiliser Composer. Et ce dernier est à PHP ce que NPM est à Node.JS. C'est un gestionnaire de dépendances qui permet d'installer, comme sa fonction l'indique, des dépendances et donc des packages de fonctionnalités que l'on peut comparer aux modules Node.JS.
 
 Pour l'installer, suivez le guide: https://getcomposer.org/download/
 
@@ -35,6 +35,8 @@ Quand celà est fait, tapez :
 laravel new nom-de-projet
 ```
 
+(Pour une fois vous pouvez copier-coller).
+
 Composer va alors initialiser un nouveau projet contenant Laravel.
 Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez le dossier contenant le projet (ou ajoutez le sur wamp si vous êtes sur windows, xamp sur mac).
 Vous arriverez sur un index ressemblant à ça : 
@@ -48,3 +50,24 @@ L'index ne se trouvant pas à la racine du dossier, c'est parfaitement normal. P
 Effectivement, ça change de l'écran d'acceuil de WordPress. Maintenant que tout celà est fait, entrons dans le vif du sujet: Comment qu'on développe en Laravel ?
 
 ## Réalisation d'un formulaire 
+
+Rien de tel qu'un bon formulaire pour commencer n'est-ce pas ? (RIP Hacker Poulette).
+Tout d'abord, on va voir comment se fait le front-end !
+Et pour créer une page formulaire qui comprend l'architecture, il faut utiliser une dépendance de Laravel, j'ai nommé Laravel Collective.
+
+### Installation de Laravel Collective
+
+Pour installer la dépendance, allez dans le fichier composer.json à la racine du dossier et dans require ajoutez une virgule au dernier argument, puis ajoutez la ligne :
+
+```JSON
+"laravelcollective/html":"^5.4.0"
+```
+
+Quand c'est fait, ouvrez votre terminal dans le dossier et exécutez la commande : 
+```
+composer update
+```
+L'installation de la dépendance va alors se lancer.
+
+### Création de la page contenant le formulaire
+
