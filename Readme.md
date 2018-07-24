@@ -117,3 +117,16 @@ Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter :
     {{Form::text(name)}}
     {{Form::submit('send!')}}
 ```
+
+Tout ça c'est bien, mais si à partir de l'index on navigue jusque là, on voit que ça ne fonctionnne pas. Pourquoi ? Parce qu'aucune route et aucun controller ne prend en charge l'affichage. On va donc en créer un !
+
+### Stairway to heaven 
+
+Une route, c'est comme un routeur en MVC, mais avec de la testostérone en plus. Allez dans le dossier routes et ouvrez web.php.
+Vous devez avoir quelque chose qui ressemble à ça: 
+
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+```
