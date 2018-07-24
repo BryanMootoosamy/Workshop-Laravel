@@ -82,7 +82,9 @@ et dans aliases (toujours dans le fichier app.php) :
 
 Il faut savoir une chose avant de commencer à faire notre page: 
 Laravel gère ses pages de manière propre en passant par son système appelé "Blade"
+
 ![blade](blade.jpg)
+
 (non pas celui-là)
 
 Aussi, on ne crée pas une page n'importe où dans Laravel, il faut aller dans: 
