@@ -11,4 +11,12 @@ Car avant de commencer, installons Composer.
 
 ### Composer ? Kézako ? Et quelle nécessité ?
 
-En effet, pour Installer et utiliser Laravel et ses différentes fonctionnalités, il faut tout d'abord utiliser Composer. Et ce dernier est à PHP ce que NPM est à Node.JS.
+![Logo Composer](Logo-composer-transparent.png)
+
+En effet, pour Installer et utiliser Laravel et ses différentes fonctionnalités, il faut tout d'abord utiliser Composer. Et ce dernier est à PHP ce que NPM est à Node.JS. C'est un gestionnaire de dépendances qui permet d'installer, comme sa fonction l'indique, des dépendaces et donc des packages de fonctionnalités que l'on peut comparer aux modules Node.JS.
+
+Pour l'installer, suivez le guide: https://getcomposer.org/download/
+
+A présent que Composer est installé, passons à la suite.
+
+### Installation de Laravel
