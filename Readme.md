@@ -40,3 +40,8 @@ Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez l
 Vous arriverez sur un index ressemblant à ça : 
 
 ![index](folder-content.png)
+
+L'index ne se trouvant pas à la racine du dossier, c'est parfaitement normal. Pour voir la page, vous devez vous déplacer dans le dossier public eeeeeet Tadam ! Magie ! Vous devriez arriver sur quelque chose comme ceci: 
+
+![page](index.png)
+
