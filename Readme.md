@@ -20,3 +20,20 @@ Pour l'installer, suivez le guide: https://getcomposer.org/download/
 A présent que Composer est installé, passons à la suite.
 
 ### Installation de Laravel
+
+Maintenant que Composer est intallé, nous allons nous rendre dans le dossier www contenant nos projets habituels afin de créer notre projet.
+
+!!Attention!! Vérifiez à posséder la version la plus récente de PHP.
+
+ouvrez votre terminal et tapez :
+```
+composer global require "laravel/installer"
+```
+
+Quand celà est fait, tapez : 
+```
+laravel new nom-de-projet
+```
+
+Composer va alors initialiser un nouveau projet contenant Laravel.
+Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez le dossier contenant le projet (ou ajoutez le sur wamp si vous êtes sur windows, xamp sur mac).
