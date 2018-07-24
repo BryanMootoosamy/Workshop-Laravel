@@ -45,3 +45,6 @@ L'index ne se trouvant pas à la racine du dossier, c'est parfaitement normal. P
 
 ![page](index.png)
 
+Effectivement, ça change de l'écran d'acceuil de WordPress. Maintenant que tout celà est fait, entrons dans le vif du sujet: Comment qu'on développe en Laravel ?
+
+## Réalisation d'un formulaire 
