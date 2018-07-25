@@ -139,7 +139,7 @@ dans le projet, on tape dans le terminal :
 php artisan make:controller Formcontroller
 ```
 
-Vous allez voir que dans votre projet, un nouveau fichier s'et c'éé dans app/Http/controller et qui s'appelle Formcontroller.php .
+Vous allez voir que dans votre projet, un nouveau fichier s'est créé dans app/Http/controller et qui s'appelle Formcontroller.php .
 
 Dans le fichier controller, nous avons donc une classe Formcontroller qui est vide. Nous allons donc lui dire qu'il faut enregistrer les informations données par l'utilisateur dans la base de donnée.
 
