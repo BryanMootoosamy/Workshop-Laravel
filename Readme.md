@@ -174,4 +174,34 @@ php artisan make:migration worshop --create=workshop
 
 qui aurait créé la table au moment où on lance la migration (que l'on verra plus loin) mais comme on travaille seul ici, c'est pas grave. l'intérêt est que, en passant par cette méthode quand on travaille à plusieurs, on a pas besoin de créer la table dans phpmyadmin, Laravel le fait tout seul. Plus simple pour les travaux de groupes).
 
+Dans le dossier database/migrations, vous allez voir un nouveau fichier à la date d'aujourd'hui suivi du nom workshop. Ouvrez-le pour prendre connaissance de son contenu.
 
+La fonction up permet d'ajouter des colonnes à la table et down d'en retirer. Nous voulous ajouter name, on va donc faire : 
+
+```php
+public function up()
+    {
+        Schema::table('workshop', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 250)->unique();
+        });
+    }
+```
+qui, dans la colonne id, incrémente un id qui sera unique et qui, dans la colonne name, aura un name unique limité à 250 caractères, et qui sera un string.
+
+on va retourner dans le dossier app et on va créer un fichier nommé Workshop.php (!! le même nom que la table, c'est hyper important sinon ça ne marchera pas, en revanche mettez une majuscule).
+
+on va mettre dans le fichier: 
+
+```php
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Workshop extends Model {
+    protected $fillable = ['name'];
+}
+```
+Ce qui va indiquer à laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
