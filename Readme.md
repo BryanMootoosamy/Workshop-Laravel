@@ -181,7 +181,7 @@ La fonction up permet d'ajouter des colonnes à la table et down d'en retirer. N
 ```php
 public function up()
     {
-        Schema::table('workshop', function (Blueprint $table) {
+        Schema::create('workshop', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 250)->unique();
             $table->timestamps();
