@@ -113,10 +113,11 @@ Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à :
 Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
 ```php
-    {{Form::text('name')}}
-    {{Form::submit('send!')}}
+    {{Form::text('name', null)}}
+    {{Form::submit('send!', null)}}
 ```
 
+(le "null" spécifie que la valeur de base n'existe pas, ce sera différent si on fait un formulaire qui édite par exemple un post d'un blog préalablement créé)
 Tout ça c'est bien, mais si à partir de l'index on navigue jusque là, on voit que ça ne fonctionnne pas. Pourquoi ? Parce qu'aucune route et aucun controller ne prend en charge l'affichage. On va donc en créer un !
 
 ### Stairway to heaven 
@@ -183,6 +184,7 @@ public function up()
         Schema::table('workshop', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 250)->unique();
+            $table->timestamps();
         });
     }
 ```
@@ -200,6 +202,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Workshop extends Model {
+    public $table = "workshop";
     protected $fillable = ['name'];
 }
 ```
@@ -222,6 +225,50 @@ quand celà est fait, réactualisez phpmyadmin et vous verez que les nouvelles t
 
 Maintenant que c'est fait, on a d'une part la base de donnée qui est prête et d'autre part le formulaire aussi. Il faut maintenant que les deux communiquent ensemble. Celà se fait par la biais du controller.
 
-### configurer le controller
+### Configurer le controller
 
+On va devoir dire au controller d'enregistrer les données dans la base de donnée. Pour celà on va créer une fonction store qui va tout récupérer du formulaire et enregistrer dans la base de donnée.
+On va donc ajouter quelques lignes pour que le controller ressemble à : 
 
+```php
+<?php
+
+namespace App\Http\Controllers;
+use App\Workshop;
+use Illuminate\Http\Request;
+use App;
+
+class Formcontroller extends Controller
+{
+    public function store (Request $request) {
+        $data = Workshop::create($request->all());
+        return back();
+    }
+}
+```
+(le return back() permet de revenir sur le formulaire quand celui-ci a été correctement envoyé)
+
+ tout celà est bien beau, on sait maintenant enregistrer des données mais le lien entre l'enregistrement et le formulairte n'est pas encore fait.
+
+ On va donc retourner dans le dossier routes puis dans le fichier web.php et on va ajouter: 
+
+ ```php
+Route::post('form/store', 'Formcontroller@store');
+```
+
+Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le tout au controller qui va se charger d'envoyer à la fonction store pour la sauvegarde dans la base de donnée.
+
+Encore faut-il aller à cette url. Retournez dans form.blade.php et dans 
+
+```php
+{{ Form::open() }}
+```
+
+on va rajouter la redirection comparable à l'action d'un form html.
+
+```php
+{{ Form::open(['url' = 'form/store']) }}
+```
+
+Enregistrez, actualisez votre page web et testez votre formulaire !
+Vous devriez voir dans votre base de donnée les nouvelles données apparaître !
