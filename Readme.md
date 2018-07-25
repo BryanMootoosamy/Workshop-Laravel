@@ -26,12 +26,12 @@ Maintenant que Composer est installé, nous allons nous rendre dans le dossier w
 !!Attention!! Vérifiez à posséder la version la plus récente de PHP.
 
 ouvrez votre terminal et tapez :
-```
+```shell
 composer global require "laravel/installer"
 ```
 
 Quand celà est fait, tapez : 
-```
+```shell
 laravel new nom-de-projet
 ```
 
@@ -64,16 +64,16 @@ Pour installer la dépendance, allez dans le fichier composer.json à la racine 
 ```
 
 Quand c'est fait, ouvrez votre terminal dans le dossier et exécutez la commande : 
-```
+```shell
 composer update
 ```
 L'installation de la dépendance va alors se lancer.
 Ensuite allez dans config/app.php et ajoutez dans "providers" :
-```
+```php
 Collective\Html\HtmlServiceProvider::class,
 ```
 et dans aliases (toujours dans le fichier app.php) :
-```
+```php
 'Form' => Collective\Html\FormFacade::class,
 'Html' => Collective\Html\HtmlFacade::class,
 ```
@@ -134,7 +134,7 @@ Vous voilà avec un formulaire !
 Vous remarquerez que lorsque l'on tappe n'importe quoi, rien ne se passe ! C'est parce qu'il nous manque toujours le controller ainsi que la base de donnée qui va dialoguer avec le formulaire. Pour créer un controller, Laravel va créer les fichiers demandés en passant par le terminal !
 
 dans le projet, on tape dans le terminal :
-```
+```shell
 php artisan make:controller Formcontroller
 ```
 
@@ -162,17 +162,16 @@ DB_PASSWORD=motdepasse
 
 Celà va permettre à Laravel de se connecter automatiquement à votre Base de donnée. mais maintenant il faut lui dire de remplir la base de donnée avec des colones. Pour ce faire, on utilise le terminal ouvert dans le dossier de notre projet et tappez :
 
-```
-php artisan make:migration workshop --table=workshop
-```
-
-(On aurait pu également faire 
-
-```
-php artisan make:migration worshop --create=workshop
+```shell
+php artisan make:migration workshop --create=workshop
 ```
 
-qui aurait créé la table au moment où on lance la migration (que l'on verra plus loin) mais comme on travaille seul ici, c'est pas grave. l'intérêt est que, en passant par cette méthode quand on travaille à plusieurs, on a pas besoin de créer la table dans phpmyadmin, Laravel le fait tout seul. Plus simple pour les travaux de groupes).
+( 
+```shell
+php artisan make:migration worshop --table=workshop
+```
+
+permettant l'édition d'une table déjà existante dans la Base de données).
 
 Dans le dossier database/migrations, vous allez voir un nouveau fichier à la date d'aujourd'hui suivi du nom workshop. Ouvrez-le pour prendre connaissance de son contenu.
 
@@ -211,3 +210,18 @@ Maintenant que l'on a dit à Laravel qu'on va ajouter un ID et une colonne name 
 ```shell
 php artisan migrate
 ```
+
+(Si celà vous rend une erreur parlant d'email, allez dans le dossier Database/migration et dans la migration create_user, modifiez la ligne qui crée un email comme ceci: 
+
+```php
+$table->string('email', 250)->unique();
+```
+supprimez les tables créées dans la base de données workshop et relancez la commande php artisan migrate.)
+
+quand celà est fait, réactualisez phpmyadmin et vous verez que les nouvelles tables sont créées.
+
+Maintenant que c'est fait, on a d'une part la base de donnée qui est prête et d'autre part le formulaire aussi. Il faut maintenant que les deux communiquent ensemble. Celà se fait par la biais du controller.
+
+### configurer le controller
+
+
