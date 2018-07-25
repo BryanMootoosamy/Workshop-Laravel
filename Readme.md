@@ -129,7 +129,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 ```
-retournez dans l'index de votre navigateur puis sur le fichier public et Hop !
+Retirez welcome pour mettre form et retournez dans l'index de votre navigateur puis sur le fichier public et Hop !
 Vous voilà avec un formulaire ! 
 Vous remarquerez que lorsque l'on tappe n'importe quoi, rien ne se passe ! C'est parce qu'il nous manque toujours le controller ainsi que la base de donnée qui va dialoguer avec le formulaire. Pour créer un controller, Laravel va créer les fichiers demandés en passant par le terminal !
 
@@ -139,3 +139,39 @@ php artisan make:controller Formcontroller
 ```
 
 Vous allez voir que dans votre projet, un nouveau fichier s'et c'éé dans app/Http/controller et qui s'appelle Formcontroller.php .
+
+Dans le fichier controller, nous avons donc une classe Formcontroller qui est vide. Nous allons donc lui dire qu'il faut enregistrer les informations données par l'utilisateur dans la base de donnée.
+
+### Configurer la base de données et la migration.
+
+Dans votre phpmyadmin, créez une nouvelle base de donnée que vous allez nommer workshop et que vous réglez en utf8-general-ci. Ensuite, dans votre éditeur, ouvrez le fichier .env que vous avez à la racine de votre dossier et localisez ces lignes: 
+
+```
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+```
+
+Dans DB_DATABASE, mettez le nom de la base de donnée, username le pseudo pour vous connecter à la DB (celui de phpmyadmin) et dans password le mot de passe phpmyadmin de sorte que ça ressemble à celà: 
+
+```
+DB_DATABASE=workshop
+DB_USERNAME=rootouvotrepseudojem'enfous
+DB_PASSWORD=motdepasse
+```
+
+Celà va permettre à Laravel de se connecter automatiquement à votre Base de donnée. mais maintenant il faut lui dire de remplir la base de donnée avec des colones. Pour ce faire, on utilise le terminal ouvert dans le dossier de notre projet et tappez :
+
+```
+php artisan make:migration workshop --table=workshop
+```
+
+(On aurait pu également faire 
+
+```
+php artisan make:migration worshop --create=workshop
+```
+
+qui aurait créé la table au moment où on lance la migration (que l'on verra plus loin) mais comme on travaille seul ici, c'est pas grave. l'intérêt est que, en passant par cette méthode quand on travaille à plusieurs, on a pas besoin de créer la table dans phpmyadmin, Laravel le fait tout seul. Plus simple pour les travaux de groupes).
+
+
