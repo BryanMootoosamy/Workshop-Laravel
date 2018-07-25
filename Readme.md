@@ -205,3 +205,9 @@ class Workshop extends Model {
 }
 ```
 Ce qui va indiquer à laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
+
+Maintenant que l'on a dit à Laravel qu'on va ajouter un ID et une colonne name et que cette dernière est remplissable, on doit faire en sorte que ça crée le tout dans la base de donnée. Pour se faire, toujours dans le terminal, tappez: 
+
+```shell
+php artisan migrate
+```
