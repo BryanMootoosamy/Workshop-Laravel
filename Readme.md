@@ -250,6 +250,8 @@ class Formcontroller extends Controller
 
  tout celà est bien beau, on sait maintenant enregistrer des données mais le lien entre l'enregistrement et le formulairte n'est pas encore fait.
 
+### Mise à jour des routes
+
  On va donc retourner dans le dossier routes puis dans le fichier web.php et on va ajouter: 
 
  ```php
@@ -272,3 +274,5 @@ on va rajouter la redirection comparable à l'action d'un form html.
 
 Enregistrez, actualisez votre page web et testez votre formulaire !
 Vous devriez voir dans votre base de donnée les nouvelles données apparaître !
+
+# Fin
