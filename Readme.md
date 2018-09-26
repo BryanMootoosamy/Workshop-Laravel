@@ -108,10 +108,10 @@ Vous remarquerez que lorsque l'on tappe n'importe quoi, rien ne se passe ! C'est
 
 dans le projet, on tape dans le terminal :
 ```shell
-php artisan make:controller Formcontroller
+php artisan make:controller FormController
 ```
 
-Vous allez voir que dans votre projet, un nouveau fichier s'est créé dans app/Http/controller et qui s'appelle Formcontroller.php .
+Vous allez voir que dans votre projet, un nouveau fichier s'est créé dans App/Http/Controller et qui s'appelle FormController.php .
 
 Dans le fichier controller, nous avons donc une classe Formcontroller qui est vide. Nous allons donc lui dire qu'il faut enregistrer les informations données par l'utilisateur dans la base de donnée.
 
@@ -136,12 +136,12 @@ DB_PASSWORD=motdepasse
 Celà va permettre à Laravel de se connecter automatiquement à votre Base de donnée. mais maintenant il faut lui dire de remplir la base de donnée avec des colones. Pour ce faire, on utilise le terminal ouvert dans le dossier de notre projet et tappez :
 
 ```shell
-php artisan make:migration workshop --create=workshops
+php artisan make:migration create_workshops --create=workshops
 ```
 
 ( 
 ```shell
-php artisan make:migration worshop --table=workshops
+php artisan make:migration create_worshops --table=workshops
 ```
 
 permettant l'édition d'une table déjà existante dans la Base de données).
@@ -153,7 +153,7 @@ La fonction up permet d'ajouter des colonnes à la table et down d'en retirer. N
 ```php
 public function up()
     {
-        Schema::create('workshop', function (Blueprint $table) {
+        Schema::create('workshops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 250)->unique();
             $table->timestamps();
@@ -162,7 +162,12 @@ public function up()
 ```
 qui, dans la colonne id, incrémente un id qui sera unique et qui, dans la colonne name, aura un name unique limité à 250 caractères, et qui sera un string.
 
-on va retourner dans le dossier app et on va créer un fichier nommé Workshop.php (!! le même nom que la table, c'est hyper important sinon ça ne marchera pas, en revanche mettez une majuscule).
+Maintenant, nous allons spécifier à Laravel que nous voulons sauver les nouvelles entrées dans le formulaire d'une certaine manière, en suivant un Modèle. On va donc faire: 
+
+```
+php artisan make:model Workshop
+```
+Il faut toujours mettre le nom de la table au pluriel et le nom du modèle au singulier avec une majuscule, Laravel va pouvoir détecter automatiquement à quel table le modèle fait référence et inversément.
 
 on va mettre dans le fichier: 
 
@@ -177,7 +182,7 @@ class Workshop extends Model {
     protected $fillable = ['name'];
 }
 ```
-Ce qui va indiquer à laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
+Ce qui va indiquer à Laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
 
 Maintenant que l'on a dit à Laravel qu'on va ajouter un ID et une colonne name et que cette dernière est remplissable, on doit faire en sorte que ça crée le tout dans la base de donnée. Pour se faire, toujours dans le terminal, tappez: 
 
@@ -190,7 +195,7 @@ php artisan migrate
 ```php
 $table->string('email', 250)->unique();
 ```
-supprimez les tables créées dans la base de données workshop et relancez la commande php artisan migrate.)
+supprimez les tables créées dans la base de données workshop et relancez la commande php artisan migrate ou encore utilisez la comment php artisan migrate:refresh.)
 
 quand celà est fait, réactualisez phpmyadmin et vous verez que les nouvelles tables sont créées.
 
@@ -207,7 +212,6 @@ On va donc ajouter quelques lignes pour que le controller ressemble à :
 namespace App\Http\Controllers;
 use App\Workshop;
 use Illuminate\Http\Request;
-use App;
 
 class Formcontroller extends Controller
 {
@@ -227,7 +231,7 @@ class Formcontroller extends Controller
  On va donc retourner dans le dossier routes puis dans le fichier web.php et on va ajouter: 
 
  ```php
-Route::post('form/store', 'Formcontroller@store');
+Route::post('form/store', 'FormController@store');
 ```
 
 Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le tout au controller qui va se charger d'envoyer à la fonction store pour la sauvegarde dans la base de donnée.
