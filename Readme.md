@@ -47,7 +47,7 @@ L'index ne se trouvant pas à la racine du dossier, c'est parfaitement normal. P
 
 ![page](index.png)
 
-ATTENTION: Si vous utilisez Laragon, vous aurez directement accès à l'index de votre site Laravel car ce dernier détecte le framework et construit un htaccess en conséquence.
+ATTENTION: Si vous utilisez Laragon, vous aurez directement accès à votre site Laravel car ce dernier détecte le framework et construit un htaccess en conséquence.
 
 Effectivement, ça change de l'écran d'acceuil de WordPress. Maintenant que tout celà est fait, entrons dans le vif du sujet: Comment qu'on développe en Laravel ?
 
