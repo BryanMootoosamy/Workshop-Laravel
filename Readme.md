@@ -80,7 +80,7 @@ Dans celle-ci, on va créer le formulaire en ajoutant ces lignes :
     @csrf
 </form>
 ```
-Jusque là, rien de neuf. Sauf pour le @csrf qui heurte à première vue. Vous vous rappelez quand je vous ai dit que Laravel utilisait de l'HTML compilé ? En voici un exemple ! le @csrf indique ici à Laravel de rajouter une protection contre le spam de formulaire. Vous voulez voir ce que ça donne ? utilisez l'inspecteur et allez voir votre formulaire, vous verrez un input caché (hidden) avec une longue chaîne de caractère qui correspond à un token. On utilise la même méthode pour pouvoir créer des formulaires qui vont éditer une entrée déjà existante dans une base de données en faisant @method('PUT').
+Jusque là, rien de neuf. Sauf pour le @csrf qui heurte à première vue. Vous vous rappelez quand je vous ai dit que Laravel utilisait de l'HTML compilé ? En voici un exemple ! le @csrf indique ici au compilateur HTML intégré à Laravel de rajouter une protection contre le spam de formulaire. Vous voulez voir ce que ça donne ? utilisez l'inspecteur et allez voir votre formulaire, vous verrez un input caché (hidden) avec une longue chaîne de caractère qui correspond à un token. On utilise la même méthode pour pouvoir créer des formulaires qui vont éditer une entrée déjà existante dans une base de données en faisant @method('PUT').
 
 On va donc ajouter normalement nos inputs :
 
