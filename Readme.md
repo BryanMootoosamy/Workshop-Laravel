@@ -77,6 +77,7 @@ Dans celle-ci, on va créer le formulaire en ajoutant ces lignes :
 
 ```html
 <form method="post">
+    @csrf
 </form>
 ```
 Jusque là, rien de neuf. On va donc ajouter normalement nos inputs :
