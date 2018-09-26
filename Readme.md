@@ -88,7 +88,7 @@ Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter :
 <button type="submit">
 ```
 
-(le "null" spécifie que la valeur de base n'existe pas, ce sera différent si on fait un formulaire qui édite par exemple un post d'un blog préalablement créé)
+
 Tout ça c'est bien, mais si à partir de l'index on navigue jusque là, on voit que ça ne fonctionnne pas. Pourquoi ? Parce qu'aucune route et aucun controller ne prend en charge l'affichage. On va donc en créer un !
 
 ### Stairway to heaven 
@@ -116,7 +116,7 @@ Dans le fichier controller, nous avons donc une classe Formcontroller qui est vi
 
 ### Configurer la base de données et la migration.
 
-Dans votre phpmyadmin, créez une nouvelle base de donnée que vous allez nommer workshop et que vous réglez en utf8-general-ci. Ensuite, dans votre éditeur, ouvrez le fichier .env que vous avez à la racine de votre dossier et localisez ces lignes: 
+Dans votre phpmyadmin, créez une nouvelle base de donnée (en utf8_general_ci) que vous allez nommer workshop et que vous réglez en utf8-general-ci. Ensuite, dans votre éditeur, ouvrez le fichier .env que vous avez à la racine de votre dossier et localisez ces lignes: 
 
 ```
 DB_DATABASE=homestead
@@ -135,12 +135,12 @@ DB_PASSWORD=motdepasse
 Celà va permettre à Laravel de se connecter automatiquement à votre Base de donnée. mais maintenant il faut lui dire de remplir la base de donnée avec des colones. Pour ce faire, on utilise le terminal ouvert dans le dossier de notre projet et tappez :
 
 ```shell
-php artisan make:migration workshop --create=workshop
+php artisan make:migration workshop --create=workshops
 ```
 
 ( 
 ```shell
-php artisan make:migration worshop --table=workshop
+php artisan make:migration worshop --table=workshops
 ```
 
 permettant l'édition d'une table déjà existante dans la Base de données).
@@ -173,7 +173,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Workshop extends Model {
-    public $table = "workshop";
     protected $fillable = ['name'];
 }
 ```
@@ -212,7 +211,8 @@ use App;
 class Formcontroller extends Controller
 {
     public function store (Request $request) {
-        $data = Workshop::create($request->all());
+        $workshop = new Workshop($request->all());
+        $workshop->save();
         return back();
     }
 }
@@ -233,14 +233,14 @@ Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/s
 
 Encore faut-il aller à cette url. Retournez dans form.blade.php et dans 
 
-```php
-{{ Form::open() }}
+```html
+<form method="post">
 ```
 
 on va rajouter la redirection comparable à l'action d'un form html.
 
-```php
-{{ Form::open(['url' = 'form/store']) }}
+```html
+<form method='post' action="{{ url('form/store') }}" >
 ```
 
 Enregistrez, actualisez votre page web et testez votre formulaire !
