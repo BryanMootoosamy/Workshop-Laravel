@@ -80,7 +80,9 @@ Dans celle-ci, on va créer le formulaire en ajoutant ces lignes :
     @csrf
 </form>
 ```
-Jusque là, rien de neuf. On va donc ajouter normalement nos inputs :
+Jusque là, rien de neuf. Sauf pour le @csrf qui heurte à première vue. Vous vous rappelez quand je vous ai dit que Laravel utilisait de l'HTML compilé ? En voici un exemple ! le @csrf indique ici à Laravel de rajouter une protection contre le spam de formulaire. Vous voulez voir ce que ça donne ? utilisez l'inspecteur et allez voir votre formulaire, vous verrez un input caché (hidden) avec une longue chaîne de caractère qui correspond à un token. On utilise la même méthode pour pouvoir créer des formulaires qui vont éditer une entrée déjà existante dans une base de données en faisant @method('PUT').
+
+On va donc ajouter normalement nos inputs :
 
 Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
@@ -139,14 +141,7 @@ Celà va permettre à Laravel de se connecter automatiquement à votre Base de d
 php artisan make:migration create_workshops --create=workshops
 ```
 
-( 
-```shell
-php artisan make:migration create_worshops --table=workshops
-```
-
-permettant l'édition d'une table déjà existante dans la Base de données).
-
-Dans le dossier database/migrations, vous allez voir un nouveau fichier à la date d'aujourd'hui suivi du nom workshop. Ouvrez-le pour prendre connaissance de son contenu.
+Dans le dossier database/migrations, vous allez voir un nouveau fichier à la date d'aujourd'hui suivi du nom create_workshops. Ouvrez-le pour prendre connaissance de son contenu.
 
 La fonction up permet d'ajouter des colonnes à la table et down d'en retirer. Nous voulous ajouter name, on va donc faire : 
 
@@ -160,7 +155,7 @@ public function up()
         });
     }
 ```
-qui, dans la colonne id, incrémente un id qui sera unique et qui, dans la colonne name, aura un name unique limité à 250 caractères, et qui sera un string.
+qui, dans la colonne id, incrémente un id qui sera unique et qui, dans la colonne name, aura un name unique limité à 250 caractères, et qui sera un string. La méthode Timestamp créera 2 colones dans la db indiquant la date et l'heure de la création de l'entrée et la date et heure de la dernière édition de l'entrée.
 
 Maintenant, nous allons spécifier à Laravel que nous voulons sauver les nouvelles entrées dans le formulaire d'une certaine manière, en suivant un Modèle. On va donc faire: 
 
@@ -183,8 +178,17 @@ class Workshop extends Model {
 }
 ```
 Ce qui va indiquer à Laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
+Il convient également de décomposer un peu notre classe Workshop. En effet, plusieurs éléments sont très important dans le fonctionnement de Laravel et de php en général. Dans un premier temps, le namespace ou espace de nom dans la langue de Patrick Bruel permet de spécifier le chemin d'accès de la classe. En quoi est-ce utile me diriez vous ? C'est simple.
 
-Maintenant que l'on a dit à Laravel qu'on va ajouter un ID et une colonne name et que cette dernière est remplissable, on doit faire en sorte que ça crée le tout dans la base de donnée. Pour se faire, toujours dans le terminal, tappez: 
+Imaginons que vous êtes dans un gros projet où vous sauvez dans une DB des utilisateurs venant de plusieurs plateformes, prenons Twitter et Reddit. Si votre projet contient deux dossiers appelés respectivements reddit et twitter qui contiennent tout les 2 une classe UserSyncer, quand vous allez appeler une des classes plus loin dans votre code, PHP ne pourra pas savoir à quelle classe exactement vous faites référence. Si par contre dans les deux classes vous spécifiez le namespace avec le chemin d'accès au fichier, alors quand vous allez l'utiliser plus loin, il suffira d'importer la classe en utilisant use suivi du chemin d'accès de la classe (somme on peut le voir ci-dessus avec le use Illuminate\Database\Eloquent\Model ) pour ne pas avoir de problème. A nôter que les conventions notamment en terme de nommage pour les classes sont contenues  dans les normes PSR 1 à 4.
+
+Ensuite, protected. Si vous ne l'avez pas vu, compris, remarqué, fait attention avant ce cours, dans une classe, une méthode et une propriétés peuvent avoir 3 états. Ceux ci sont: 
+* public (accessible partout)
+* protected (accessible par la classe et les classes qui étendent celle-ci
+* private (seule la classe peut y avoir accès)
+autrement dit, choisissez bien l'état pour protéger efficacement des données sensibles contenues dans la classe.
+
+Bref, maintenant que l'on a dit à Laravel qu'on va ajouter un ID et une colonne name et que cette dernière est remplissable, on doit faire en sorte que ça crée le tout dans la base de donnée. Pour se faire, toujours dans le terminal, tappez: 
 
 ```shell
 php artisan migrate
@@ -210,7 +214,7 @@ On va donc ajouter quelques lignes pour que le controller ressemble à :
 <?php
 
 namespace App\Http\Controllers;
-use App\Workshop;
+use App\Workshop; //pour spécifier qu'on utilise le modèle Workshop précédemment créé en se servant de son namespace comme référence
 use Illuminate\Http\Request;
 
 class Formcontroller extends Controller
@@ -224,7 +228,10 @@ class Formcontroller extends Controller
 ```
 (le return back() permet de revenir sur le formulaire quand celui-ci a été correctement envoyé)
 
- tout celà est bien beau, on sait maintenant enregistrer des données mais le lien entre l'enregistrement et le formulairte n'est pas encore fait.
+On donne donc au modèle toutes les données récupérée dans le formulaire pour qu'il les mettent dans la DB par le biais de la méthode save().
+Ici nous ne sauvons qu'une seule donnée mais quand il s'agit de plusieurs données, il faudra créer un tableau qui va associer chaque champs contenu dans $fillable à chaque donnée récupérée dans le formulaire.
+
+ tout celà est bien beau, on sait maintenant enregistrer des données mais le lien entre l'enregistrement et le formulaire n'est pas encore fait.
 
 ### Mise à jour des routes
 
@@ -234,7 +241,7 @@ class Formcontroller extends Controller
 Route::post('form/store', 'FormController@store');
 ```
 
-Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le tout au controller qui va se charger d'envoyer à la fonction store pour la sauvegarde dans la base de donnée.
+Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le contenu de ce qui est dans le formulaire dans la fonction store du controller FormController  pour la sauvegarde dans la base de donnée.
 
 Encore faut-il aller à cette url. Retournez dans form.blade.php et dans 
 
@@ -247,6 +254,7 @@ on va rajouter la redirection comparable à l'action d'un form html.
 ```html
 <form method='post' action="{{ url('form/store') }}" >
 ```
+encore une fois, l'HTML ve se compiler de telle manière à ce que le lien contenu dans action renvoie au controller lié à la route.
 
 Enregistrez, actualisez votre page web et testez votre formulaire !
 Vous devriez voir dans votre base de donnée les nouvelles données apparaître !
