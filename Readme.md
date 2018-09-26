@@ -86,7 +86,7 @@ Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
 ```html
 <input type="text" name="name">
-<button type="submit">
+<button type="submit">Envoyer</button>
 ```
 
 
