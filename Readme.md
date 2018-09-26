@@ -5,8 +5,8 @@
 ## Introduction
 ### Qu'est-ce que Laravel ?
 
-Laravel est un CMS en PHP qui permet de créer un site en suivant un modèle MVC et qui est basé sur Symphony. Sa grosse différence avec WordPress est que Laravel fonctionne de manière beaucoup moins visuelle pour le développeur, ayant une configuration et un développement plus orienté Back-End.
-Laravel a une gestion de base de donnée ainsi que de page html propre à elle, que nous verrons plus loin.
+Laravel est un framework en PHP (et pas, comme le veut une certaine croyance populaire, un CMS) qui permet de créer un site en suivant un modèle MVC et qui est basé sur Symphony. Sa grosse différence avec WordPress est que Laravel est bien plus orienté back-end que son homologue qui constitue un véritable CMS, ayant une configuration et un développement plus orienté Back-End.
+Laravel a une gestion de base de donnée propre et utilise un rendu compilé pour tout ce qui touche à l'HTML, que nous verrons plus loin.
 Car avant de commencer, installons Composer.
 
 ### Composer ? Kézako ? Et quelle nécessité ?
@@ -23,7 +23,7 @@ A présent que Composer est installé, passons à la suite.
 
 Maintenant que Composer est installé, nous allons nous rendre dans le dossier www contenant nos projets habituels afin de créer notre projet.
 
-!!Attention!! Vérifiez à posséder la version la plus récente de PHP.
+!!Attention!! Vérifiez à posséder la version la plus récente de PHP. ( >= 7.2)
 
 ouvrez votre terminal et tapez :
 ```shell
@@ -38,7 +38,7 @@ laravel new nom-de-projet
 (Pour une fois vous pouvez copier-coller).
 
 Composer va alors initialiser un nouveau projet contenant Laravel.
-Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez le dossier contenant le projet (ou ajoutez le sur wamp si vous êtes sur windows, xamp sur mac).
+Vous voulez voir ce que vous avez créé ? Allez sur votre Localhost et ouvrez le dossier contenant le projet (ou ajoutez le sur wamp, pour ce qui est de laragon rechargez juste Apache si vous êtes sur windows, xamp sur mac).
 Vous arriverez sur un index ressemblant à ça : 
 
 ![index](folder-content.png)
@@ -47,36 +47,14 @@ L'index ne se trouvant pas à la racine du dossier, c'est parfaitement normal. P
 
 ![page](index.png)
 
+ATTENTION: Si vous utilisez Laragon, vous auree directeent accès à l'index de votre site Laravel car ce dernier détecte le framework et construit un htaccess en conséquence.
+
 Effectivement, ça change de l'écran d'acceuil de WordPress. Maintenant que tout celà est fait, entrons dans le vif du sujet: Comment qu'on développe en Laravel ?
 
 ## Réalisation d'un formulaire 
 
 Rien de tel qu'un bon formulaire pour commencer n'est-ce pas ? (RIP Hacker Poulette).
 Tout d'abord, on va voir comment se fait le front-end !
-Et pour créer une page formulaire qui comprend l'architecture, il faut utiliser une dépendance de Laravel, j'ai nommé Laravel Collective.
-
-### Installation de Laravel Collective
-
-Pour installer la dépendance, allez dans le fichier composer.json à la racine du dossier et dans require ajoutez une virgule au dernier argument, puis ajoutez la ligne :
-
-```JSON
-"laravelcollective/html":"^5.4.0"
-```
-
-Quand c'est fait, ouvrez votre terminal dans le dossier et exécutez la commande : 
-```shell
-composer update
-```
-L'installation de la dépendance va alors se lancer.
-Ensuite allez dans config/app.php et ajoutez dans "providers" :
-```php
-Collective\Html\HtmlServiceProvider::class,
-```
-et dans aliases (toujours dans le fichier app.php) :
-```php
-'Form' => Collective\Html\FormFacade::class,
-'Html' => Collective\Html\HtmlFacade::class,
-```
 
 ### Création de la page contenant le formulaire
 
@@ -97,24 +75,17 @@ Vous pouvez créer un nouveau fichier dans views qu'on va appeler form.blade.php
 Ensuite, vous pouvez le remplir avec de l'HTML mais n'allez pas plus loin que la balise body.
 Dans celle-ci, on va créer le formulaire en ajoutant ces lignes : 
 
-```php
-{!! Form::open() !!}
-
-{!! Form::close() !!}
-```
-
-Pour ce qui est de ce qu'on vient d'écrire, c'est l'équivalent en html à : 
 ```html
-<form>
-
+<form method="post">
 </form>
 ```
+Jusque là, rien de neuf. On va donc ajouter normalement nos inputs :
 
 Il faut maintenant ajouter des inputs à notre formulaire. Disons un input texte et un bouton.
 Entre les lignes de ce qu'on à écrit auparavant, on va donc ajouter : 
-```php
-    {{Form::text('name', null)}}
-    {{Form::submit('send!', null)}}
+```html
+<input type="text" name="name">
+<button type="submit">
 ```
 
 (le "null" spécifie que la valeur de base n'existe pas, ce sera différent si on fait un formulaire qui édite par exemple un post d'un blog préalablement créé)
