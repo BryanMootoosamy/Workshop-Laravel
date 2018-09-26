@@ -119,7 +119,7 @@ Dans le fichier controller, nous avons donc une classe Formcontroller qui est vi
 
 ### Configurer la base de données et la migration.
 
-Dans votre phpmyadmin, créez une nouvelle base de donnée (en utf8_general_ci) que vous allez nommer workshop et que vous réglez en utf8-general-ci. Ensuite, dans votre éditeur, ouvrez le fichier .env que vous avez à la racine de votre dossier et localisez ces lignes: 
+Dans votre phpmyadmin, créez une nouvelle base de donnée (en utf8_general_ci) que vous allez nommer workshop. Ensuite, dans votre éditeur, ouvrez le fichier .env que vous avez à la racine de votre dossier et localisez ces lignes: 
 
 ```
 DB_DATABASE=homestead
@@ -164,7 +164,7 @@ php artisan make:model Workshop
 ```
 Il faut toujours mettre le nom de la table au pluriel et le nom du modèle au singulier avec une majuscule, Laravel va pouvoir détecter automatiquement à quel table le modèle fait référence et inversément.
 
-on va mettre dans le fichier: 
+on va ouvrir le fichier présent dans le dossier App de votre projet et mettre dans le fichier: 
 
 ```php
 <?php
@@ -180,11 +180,11 @@ class Workshop extends Model {
 Ce qui va indiquer à Laravel que l'on peut ajouter un name dans la base de donnée car la colonne name est remplissable (d'où $fillable).
 Il convient également de décomposer un peu notre classe Workshop. En effet, plusieurs éléments sont très important dans le fonctionnement de Laravel et de php en général. Dans un premier temps, le namespace ou espace de nom dans la langue de Patrick Bruel permet de spécifier le chemin d'accès de la classe. En quoi est-ce utile me diriez vous ? C'est simple.
 
-Imaginons que vous êtes dans un gros projet où vous sauvez dans une DB des utilisateurs venant de plusieurs plateformes, prenons Twitter et Reddit. Si votre projet contient deux dossiers appelés respectivements reddit et twitter qui contiennent tout les 2 une classe UserSyncer, quand vous allez appeler une des classes plus loin dans votre code, PHP ne pourra pas savoir à quelle classe exactement vous faites référence. Si par contre dans les deux classes vous spécifiez le namespace avec le chemin d'accès au fichier, alors quand vous allez l'utiliser plus loin, il suffira d'importer la classe en utilisant use suivi du chemin d'accès de la classe (somme on peut le voir ci-dessus avec le use Illuminate\Database\Eloquent\Model ) pour ne pas avoir de problème. A nôter que les conventions notamment en terme de nommage pour les classes sont contenues  dans les normes PSR 1 à 4.
+Imaginons que vous êtes dans un gros projet où vous sauvez dans une DB des utilisateurs venant de plusieurs plateformes, prenons Twitter et Reddit. Si votre projet contient deux dossiers appelés respectivement reddit et twitter qui contiennent tout les 2 une classe UserSyncer, quand vous allez appeler une des classes plus loin dans votre code, PHP ne pourra pas savoir à quelle classe exactement vous faites référence. Si par contre dans les deux classes vous spécifiez le namespace avec le chemin d'accès au fichier, alors quand vous allez l'utiliser plus loin, il suffira d'importer la classe en utilisant use suivi du chemin d'accès de la classe (somme on peut le voir ci-dessus avec le use Illuminate\Database\Eloquent\Model ) pour ne pas avoir de problème. A nôter que les conventions notamment en terme de nommage pour les classes sont contenues  dans les normes PSR 1 à 4.
 
 Ensuite, protected. Si vous ne l'avez pas vu, compris, remarqué, fait attention avant ce cours, dans une classe, une méthode et une propriétés peuvent avoir 3 états. Ceux ci sont: 
 * public (accessible partout)
-* protected (accessible par la classe et les classes qui étendent celle-ci
+* protected (accessible par la classe et les classes qui étendent celle-ci)
 * private (seule la classe peut y avoir accès)
 autrement dit, choisissez bien l'état pour protéger efficacement des données sensibles contenues dans la classe.
 
@@ -241,7 +241,7 @@ Ici nous ne sauvons qu'une seule donnée mais quand il s'agit de plusieurs donn�
 Route::post('form/store', 'FormController@store');
 ```
 
-Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le contenu de ce qui est dans le formulaire dans la fonction store du controller FormController  pour la sauvegarde dans la base de donnée.
+Cette route va spécifier que quand on arrive à l'url nomdeprojet/public/form/store, on envoie le contenu de ce qui est dans le formulaire dans la fonction store du controller FormController pour la sauvegarde dans la base de donnée.
 
 Encore faut-il aller à cette url. Retournez dans form.blade.php et dans 
 
